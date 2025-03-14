@@ -11,4 +11,5 @@ AuthorizationService/target/
 *.iml
 *.ipr
 
-.env
+application.properties
+.env.*
