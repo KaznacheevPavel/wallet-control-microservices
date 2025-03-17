@@ -1,0 +1,22 @@
+version: "3.9"
+name: wallet-control-microservices
+
+services:
+  DB_UserService:
+    image: postgres:17.4-alpine3.21
+    container_name: DB_UserService
+    env_file:
+      - .env.DB_UserService
+    ports:
+      - "5432:5432"
+
+  UserService:
+    image: user-service
+    container_name: UserService
+    build:
+      context: ../UserService
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - DB_UserService
