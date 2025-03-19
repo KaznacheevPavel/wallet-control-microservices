@@ -12,6 +12,7 @@
 
     <modules>
         <module>GatewayService</module>
+        <module>AuthorizationService</module>
         <module>UserService</module>
     </modules>
 
