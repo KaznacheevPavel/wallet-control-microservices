@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+services:
+  uri:
+    user-service: http://UserService:8081
+
+spring:
+  application:
+    name: Gateway Service
+  cloud:
+    gateway:
+      routes:
+        - id: createUser
+          uri: ${services.uri.user-service}
+          predicates:
+            - Method=POST
+            - Path=/api/users
+          filters:
+            - SetPath=/api/v1/users
+
+        - id: getUser
+          uri: ${services.uri.user-service}
+          predicates:
+            - Method=GET
+            - Path=/api/users/{username}
+          filters:
+            - SetPath=/api/v1/users/{username}

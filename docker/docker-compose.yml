@@ -7,6 +7,8 @@ services:
     container_name: DB_UserService
     env_file:
       - .env.DB_UserService
+    networks:
+      - databases_network
     ports:
       - "5432:5432"
 
@@ -16,7 +18,25 @@ services:
     build:
       context: ../UserService
       dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
+    networks:
+      - databases_network
+      - microservices_network
     depends_on:
       - DB_UserService
+
+  GatewayService:
+    image: gateway-service
+    container_name: GatewayService
+    build:
+      context: ../GatewayService
+      dockerfile: Dockerfile
+    networks:
+      - gateway_network
+      - microservices_network
+    ports:
+      - "8080:8080"
+
+networks:
+  databases_network:
+  microservices_network:
+  gateway_network:
